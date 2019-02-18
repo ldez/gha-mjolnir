@@ -15,8 +15,8 @@ COPY --from=builder /go/src/github.com/ldez/gha-mjolnir/mjolnir /usr/bin/mjolnir
 LABEL "name"="Mjolnir"
 LABEL "com.github.actions.name"="Closes issues related to a merged pull request."
 LABEL "com.github.actions.description"="This is an Action to close issues related to a merged pull request."
-LABEL "com.github.actions.icon"="package"
-LABEL "com.github.actions.color"="green"
+LABEL "com.github.actions.icon"="git-merge"
+LABEL "com.github.actions.color"="purple"
 
 LABEL "repository"="http://github.com/ldez/gha-mjolnir"
 LABEL "homepage"="http://github.com/ldez/gha-mjolnir"
