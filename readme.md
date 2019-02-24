@@ -2,7 +2,7 @@
 
 [![Release](https://img.shields.io/github/release/ldez/gha-mjolnir.svg?style=flat)](https://github.com/ldez/gha-mjolnir/releases)
 [![Build Status](https://travis-ci.org/ldez/gha-mjolnir.svg?branch=master)](https://travis-ci.org/ldez/gha-mjolnir)
-[![Docker Information](https://images.microbadger.com/badges/image/ldez/gha-mjolnir.svg)](https://hub.docker.com/r/ldez/gha-mjolnir/)
+[![Docker](https://img.shields.io/badge/Docker-available-blue.svg)](https://hub.docker.com/r/ldez/gha-mjolnir/)
 
 Closes issues related to the merge of a pull request.
 
