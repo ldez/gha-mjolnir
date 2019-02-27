@@ -16,7 +16,7 @@ By example when a branch is related to version (e.g. `v1.5`, `v2.0`, ...)
 
 - prefixes (case insensitive): `close`, `closes`, `closed`, `fix`, `fixes`, `fixed`, `resolve`, `resolves`, `resolved`
 - issues references separators (can be mixed): ` ` (space), `,` (period)
-- prefix and issues references can be separated by: ` ` (space), `:` (colon), on both.
+- prefix and issues references can be separated by: ` ` (space), `:` (colon), or both.
 
 Examples:
 
