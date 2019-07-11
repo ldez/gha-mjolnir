@@ -1,15 +1,15 @@
-FROM golang:alpine3.8 as builder
+FROM golang:alpine3.10 as builder
 
 RUN apk --update upgrade \
-&& apk --no-cache --no-progress add make git gcc musl-dev \
+&& apk --no-cache --no-progress add make git gcc musl-dev ca-certificates \
 && rm -rf /var/cache/apk/*
 
 WORKDIR /go/src/github.com/ldez/gha-mjolnir
 COPY . .
 RUN make build
 
-FROM alpine:3.8
-RUN apk update && apk add --no-cache --virtual ca-certificates
+FROM alpine:3.10
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /go/src/github.com/ldez/gha-mjolnir/mjolnir /usr/bin/mjolnir
 
 LABEL "name"="Mjolnir"
