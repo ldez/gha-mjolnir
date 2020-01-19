@@ -30,6 +30,7 @@
     "dupl",
     "prealloc",
     "scopelint",
+    "wsl",
   ]
 
 [issues]
@@ -43,3 +44,6 @@
   [[issues.exclude-rules]]
     path = "mjolnir.go"
     text = "`(.+)RE` is a global variable"
+  [[issues.exclude-rules]]
+    path = "mjolnir_test.go"
+    text = "Function 'Test_parseIssueFixes' is too long"
