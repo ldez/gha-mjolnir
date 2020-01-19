@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/google/go-github/v27/github"
+	"github.com/google/go-github/v29/github"
 )
 
 var (
@@ -49,7 +49,6 @@ func closeRelatedIssues(ctx context.Context, client *github.Client, owner string
 }
 
 func closeIssue(ctx context.Context, client *github.Client, owner string, repositoryName string, pr *github.PullRequest, issueNumber int) error {
-
 	var milestone *int
 	if pr.Milestone != nil {
 		milestone = pr.Milestone.Number
