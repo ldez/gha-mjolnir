@@ -4,15 +4,17 @@
 [![Build Status](https://travis-ci.com/ldez/gha-mjolnir.svg?branch=master)](https://travis-ci.com/ldez/gha-mjolnir)
 [![Docker](https://img.shields.io/badge/Docker-available-blue.svg)](https://hub.docker.com/r/ldez/gha-mjolnir/)
 
-Closes issues related to the merge of a pull request.
+[![Sponsor](https://img.shields.io/badge/Sponsor%20me-%E2%9D%A4%EF%B8%8F-pink)](https://github.com/sponsors/ldez)
+
+Close issues related to the merge of a pull request.
 
 Useful:
 
 - to close multiple issues related to a pull request.
 - to close issues related to a pull request not based on the default branch (i.e. `master`).
-By example when a branch is related to version (e.g. `v1.5`, `v2.0`, ...)
+For example, when a branch is related to version (e.g. `v1.5`, `v2.0`, ...)
 
-## Supported syntaxes
+## Supported Syntaxes
 
 - prefixes (case insensitive): `close`, `closes`, `closed`, `fix`, `fixes`, `fixed`, `resolve`, `resolves`, `resolved`
 - issues references separators (can be mixed): ` ` (space), `,` (period)
