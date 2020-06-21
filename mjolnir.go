@@ -26,7 +26,7 @@ func closeRelatedIssues(ctx context.Context, client *github.Client, owner string
 		if !dryRun {
 			err := closeIssue(ctx, client, owner, repositoryName, pr, issueNumber)
 			if err != nil {
-				return fmt.Errorf("unable to close issue #%d: %v", issueNumber, err)
+				return fmt.Errorf("unable to close issue #%d: %w", issueNumber, err)
 			}
 		}
 
@@ -39,7 +39,7 @@ func closeRelatedIssues(ctx context.Context, client *github.Client, owner string
 			if !dryRun {
 				err := addComment(ctx, client, owner, repositoryName, issueNumber, message)
 				if err != nil {
-					return fmt.Errorf("unable to add comment on issue #%d: %v", issueNumber, err)
+					return fmt.Errorf("unable to add comment on issue #%d: %w", issueNumber, err)
 				}
 			}
 		}

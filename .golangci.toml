@@ -1,7 +1,6 @@
 [run]
   deadline = "2m"
-  skip-files = [
-  ]
+  skip-files = []
 
 [linters-settings]
 
@@ -31,6 +30,7 @@
     "prealloc",
     "scopelint",
     "wsl",
+    "testpackage",
   ]
 
 [issues]
