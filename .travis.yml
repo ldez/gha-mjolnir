@@ -25,7 +25,7 @@ env:
 
 before_install:
   # Install linters and misspell
-  - curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | bash -s -- -b ${GOLANGCI_LINT_VERSION}
+  - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin ${GOLANGCI_LINT_VERSION}
   - golangci-lint --version
 
 install:
