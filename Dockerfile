@@ -1,16 +1,14 @@
-FROM golang:alpine3.10 as builder
+FROM golang:alpine3.12 as builder
 
-RUN apk --update upgrade \
-&& apk --no-cache --no-progress add make git gcc musl-dev ca-certificates \
-&& rm -rf /var/cache/apk/*
+RUN apk --no-cache --no-progress add make git gcc musl-dev ca-certificates
 
-WORKDIR /go/src/github.com/ldez/gha-mjolnir
+WORKDIR /src/
 COPY . .
 RUN make build
 
-FROM alpine:3.10
+FROM alpine:3.12
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
-COPY --from=builder /go/src/github.com/ldez/gha-mjolnir/mjolnir /usr/bin/mjolnir
+COPY --from=builder /src/mjolnir /usr/bin/mjolnir
 
 LABEL "name"="Mjolnir"
 LABEL "com.github.actions.name"="Closes issues related to a merged pull request."
