@@ -33,15 +33,23 @@ closed : #1, #2, #3
 
 ## Usage
 
-```hcl
-workflow "Auto close issues" {
-  on = "pull_request"
-  resolves = ["mjolnir-issues"]
-}
+```yaml
+name: Close issues related to a merged pull request based on master branch.
 
-action "mjolnir-issues" {
-  uses = "docker://ldez/gha-mjolnir"
-  secrets = ["GITHUB_TOKEN"]
-  args = ""
-}
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+jobs:
+  closeIssueOnPrMergeTrigger:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Closes issues related to a merged pull request.
+        uses: ldez/gha-mjolnir@v1.0.3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
