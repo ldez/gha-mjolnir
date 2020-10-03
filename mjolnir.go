@@ -74,7 +74,7 @@ func addComment(ctx context.Context, client *github.Client, owner string, reposi
 func parseIssueFixes(text string) []int {
 	var issueNumbers []int
 
-	submatch := globalFixesIssueRE.FindStringSubmatch(strings.Replace(text, ":", "", -1))
+	submatch := globalFixesIssueRE.FindStringSubmatch(strings.ReplaceAll(text, ":", ""))
 
 	if len(submatch) != 0 {
 		issuesRaw := fixesIssueRE.Split(submatch[1], -1)
