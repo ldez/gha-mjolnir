@@ -30,8 +30,12 @@
     "prealloc",
     "scopelint",
     "wsl",
-    "testpackage",
     "nlreturn",
+    "testpackage",
+    "paralleltest",
+    "tparallel",
+    "wrapcheck",
+    "exhaustivestruct",
   ]
 
 [issues]
@@ -41,10 +45,10 @@
   exclude = []
   [[issues.exclude-rules]]
     path = "version.go"
-    text = "`(version|date|commit)` is a global variable"
+    text = "(version|date|commit) is a global variable"
   [[issues.exclude-rules]]
     path = "mjolnir.go"
-    text = "`(.+)RE` is a global variable"
+    text = "(.+)RE is a global variable"
   [[issues.exclude-rules]]
     path = "mjolnir_test.go"
     text = "Function 'Test_parseIssueFixes' is too long"

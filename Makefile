@@ -1,6 +1,4 @@
-.PHONY: clean fmt check test build
-
-GOFILES := $(shell git ls-files '*.go' | grep -v '^vendor/')
+.PHONY: clean check test build
 
 TAG_NAME := $(shell git tag -l --contains HEAD)
 SHA := $(shell git rev-parse HEAD)
@@ -14,13 +12,10 @@ clean:
 
 build: clean
 	@echo Version: $(VERSION)
-	GO111MODULE=on go build -v -ldflags '-X "main.version=${VERSION}" -X "main.commit=${SHA}" -X "main.date=${BUILD_DATE}"' -o mjolnir
+	go build -v -ldflags '-X "main.version=${VERSION}" -X "main.commit=${SHA}" -X "main.date=${BUILD_DATE}"' -o mjolnir
 
 test: clean
-	GO111MODULE=on go test -v -cover ./...
+	go test -v -cover ./...
 
 check:
-	GO111MODULE=on golangci-lint run
-
-fmt:
-	gofmt -s -l -w $(GOFILES)
+	golangci-lint run
