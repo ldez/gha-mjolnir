@@ -23,6 +23,9 @@
 [linters]
   enable-all = true
   disable = [
+    "golint",
+    "scopelint",
+    "interfacer",
     "maligned",
     "lll",
     "gas",
@@ -36,6 +39,9 @@
     "tparallel",
     "wrapcheck",
     "exhaustivestruct",
+    "forbidigo",
+    "gomnd",
+    "ifshort",
   ]
 
 [issues]
