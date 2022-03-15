@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/google/go-github/v37/github"
+	"github.com/google/go-github/v43/github"
 )
 
 var (

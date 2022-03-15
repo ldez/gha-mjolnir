@@ -1,0 +1,51 @@
+run:
+  deadline: 2m
+  skip-files: []
+linters-settings:
+  govet:
+    check-shadowing: true
+  gocyclo:
+    min-complexity: 16
+  maligned:
+    suggest-new: true
+  goconst:
+    min-len: 3
+    min-occurrences: 3
+  misspell:
+    locale: US
+linters:
+  enable-all: true
+  disable:
+    - golint
+    - scopelint
+    - interfacer
+    - maligned
+    - lll
+    - gas
+    - dupl
+    - prealloc
+    - scopelint
+    - wsl
+    - nlreturn
+    - testpackage
+    - paralleltest
+    - tparallel
+    - wrapcheck
+    - exhaustivestruct
+    - forbidigo
+    - gomnd
+    - ifshort
+    - varnamelen
+
+issues:
+  exclude-use-default: false
+  max-per-linter: 0
+  max-same-issues: 0
+  exclude: []
+  exclude-rules:
+    - path: version.go
+      text: (version|date|commit) is a global variable
+    - path: mjolnir.go
+      text: (.+)RE is a global variable
+    - path: mjolnir_test.go
+      text: Function 'Test_parseIssueFixes' is too long
