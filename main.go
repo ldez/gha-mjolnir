@@ -11,21 +11,34 @@ import (
 func main() {
 	displayVersion()
 
-	err := ghactions.NewAction(context.Background()).OnPullRequest(action).Run()
+	err := ghactions.NewAction(context.Background()).
+		OnPullRequest(func(client *github.Client, event *github.PullRequestEvent) error {
+			return action(client, event)
+		}).
+		OnPullRequestTarget(func(client *github.Client, event *github.PullRequestTargetEvent) error {
+			return action(client, event)
+		}).
+		Run()
 	if err != nil {
 		log.Fatal(err)
 	}
 }
 
-func action(client *github.Client, event *github.PullRequestEvent) error {
-	action := event.GetAction()
+type pullRequestBasedEvent interface {
+	GetAction() string
+	GetPullRequest() *github.PullRequest
+}
 
-	if action != "closed" || !event.PullRequest.GetMerged() {
-		log.Printf("skip: %q merge %v", action, event.PullRequest.GetMerged())
+func action(client *github.Client, event pullRequestBasedEvent) error {
+	action := event.GetAction()
+	pr := event.GetPullRequest()
+
+	if action != "closed" || !pr.GetMerged() {
+		log.Printf("skip: %q merge %v", action, pr.GetMerged())
 		return nil
 	}
 
 	owner, repoName := ghactions.GetRepoInfo()
 
-	return closeRelatedIssues(context.Background(), client, owner, repoName, event.PullRequest, false)
+	return closeRelatedIssues(context.Background(), client, owner, repoName, pr, false)
 }
