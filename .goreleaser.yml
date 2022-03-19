@@ -27,6 +27,7 @@ changelog:
       - '^docs:'
       - '^doc:'
       - '^chore:'
+      - '^chore\(deps\):'
       - '^test:'
       - '^tests:'
 

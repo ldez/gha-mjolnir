@@ -19,3 +19,11 @@ test: clean
 
 check:
 	golangci-lint run
+
+image:
+	docker build -t ldez/gha-mjolnir:latest .
+	docker tag ldez/gha-mjolnir:latest ldez/gha-mjolnir:${VERSION}
+
+publish-image:
+	docker push ldez/gha-mjolnir:latest
+	docker push ldez/gha-mjolnir:${VERSION}

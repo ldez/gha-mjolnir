@@ -14,7 +14,7 @@ Useful:
 - to close issues related to a pull request not based on the default branch (i.e. `master`).
 For example, when a branch is related to version (e.g. `v1.5`, `v2.0`, ...)
 
-## Supported Syntaxes
+## Supported Syntax
 
 - prefixes (case insensitive): `close`, `closes`, `closed`, `fix`, `fixes`, `fixed`, `resolve`, `resolves`, `resolved`
 - issues references separators (can be mixed): ` ` (space), `,` (period)
