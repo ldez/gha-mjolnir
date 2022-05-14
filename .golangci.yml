@@ -32,6 +32,7 @@ linters:
     - tparallel
     - wrapcheck
     - exhaustivestruct
+    - exhaustruct
     - forbidigo
     - gomnd
     - ifshort
