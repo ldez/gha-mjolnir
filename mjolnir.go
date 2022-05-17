@@ -21,6 +21,11 @@ var (
 func closeRelatedIssues(ctx context.Context, client *github.Client, owner string, repositoryName string, pr *github.PullRequest, dryRun bool) error {
 	issueNumbers := parseIssueFixes(pr.GetBody())
 
+	repo, _, err := client.Repositories.Get(ctx, owner, repositoryName)
+	if err != nil {
+		return fmt.Errorf("unable to access repository %s/%s: %w", owner, repositoryName, err)
+	}
+
 	for _, issueNumber := range issueNumbers {
 		log.Printf("PR #%d: closes issue #%d, add milestones %s", pr.GetNumber(), issueNumber, pr.Milestone.GetTitle())
 		if !dryRun {
@@ -31,7 +36,7 @@ func closeRelatedIssues(ctx context.Context, client *github.Client, owner string
 		}
 
 		// Add comment if needed
-		if pr.Base.GetRef() != "master" {
+		if pr.Base.GetRef() != repo.GetDefaultBranch() {
 			message := fmt.Sprintf("Closed by #%d.", pr.GetNumber())
 
 			log.Printf("PR #%d: issue #%d, add comment: %s", pr.GetNumber(), issueNumber, message)

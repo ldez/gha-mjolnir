@@ -11,7 +11,7 @@ Close issues related to the merge of a pull request.
 Useful:
 
 - to close multiple issues related to a pull request.
-- to close issues related to a pull request not based on the default branch (i.e. `master`).
+- to close issues related to a pull request not based on the default branch (ex: `master`, `main`).
 For example, when a branch is related to version (e.g. `v1.5`, `v2.0`, ...)
 
 ## Supported Syntax
