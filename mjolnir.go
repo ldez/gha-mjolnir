@@ -79,21 +79,28 @@ func addComment(ctx context.Context, client *github.Client, owner string, reposi
 func parseIssueFixes(text string) []int {
 	var issueNumbers []int
 
-	submatch := globalFixesIssueRE.FindStringSubmatch(strings.ReplaceAll(text, ":", ""))
+	submatch := globalFixesIssueRE.FindAllStringSubmatch(strings.ReplaceAll(text, ":", ""), -1)
+
+	for _, s := range submatch {
+		fmt.Println(s)
+	}
 
 	if len(submatch) != 0 {
-		issuesRaw := fixesIssueRE.Split(submatch[1], -1)
+		for _, sub := range submatch {
+			issuesRaw := fixesIssueRE.Split(sub[1], -1)
 
-		for _, issueRaw := range issuesRaw {
-			cleanIssueRaw := cleanNumberRE.ReplaceAllString(issueRaw, "")
-			if len(cleanIssueRaw) != 0 {
-				numb, err := strconv.ParseInt(cleanIssueRaw, 10, 16)
-				if err != nil {
-					log.Println(err)
+			for _, issueRaw := range issuesRaw {
+				cleanIssueRaw := cleanNumberRE.ReplaceAllString(issueRaw, "")
+				if len(cleanIssueRaw) != 0 {
+					numb, err := strconv.ParseInt(cleanIssueRaw, 10, 16)
+					if err != nil {
+						log.Println(err)
+					}
+					issueNumbers = append(issueNumbers, int(numb))
 				}
-				issueNumbers = append(issueNumbers, int(numb))
 			}
 		}
 	}
+
 	return issueNumbers
 }

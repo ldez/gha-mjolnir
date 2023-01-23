@@ -53,6 +53,14 @@ func Test_parseIssueFixes(t *testing.T) {
 `,
 			expectedNumbers: []int{13, 14, 15, 16},
 		},
+		{
+			name: "multiple lines:",
+			text: `
+	Fixes: #13,#14
+	Fixes: #15,#16
+`,
+			expectedNumbers: []int{13, 14, 15, 16},
+		},
 	}
 
 	for _, test := range testCases {
