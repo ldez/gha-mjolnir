@@ -1,0 +1,10 @@
+name: 'Mjolnir'
+description: 'This is an Action to close issues related to a merged pull request.'
+author: ldez
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+branding:
+  icon: 'git-merge'
+  color: 'purple'
