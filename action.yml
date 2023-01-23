@@ -1,4 +1,4 @@
-name: 'Mjolnir'
+name: 'Closes issues related to a merged pull request.'
 description: 'This is an Action to close issues related to a merged pull request.'
 author: ldez
 
