@@ -1,18 +1,24 @@
 run:
-  deadline: 2m
+  timeout: 2m
   skip-files: []
 linters-settings:
   govet:
     check-shadowing: true
   gocyclo:
     min-complexity: 16
-  maligned:
-    suggest-new: true
   goconst:
     min-len: 3
     min-occurrences: 3
   misspell:
     locale: US
+  depguard:
+    rules:
+      main:
+        deny:
+          - pkg: "github.com/instana/testify"
+            desc: not allowed
+          - pkg: "github.com/pkg/errors"
+            desc: Should be replaced by standard lib errors package
 linters:
   enable-all: true
   disable:
@@ -26,10 +32,10 @@ linters:
     - scopelint # deprecated
     - structcheck # deprecated
     - varcheck # deprecated
+    - cyclop # duplicate of gocyclo
     - sqlclosecheck # not relevant (SQL)
     - rowserrcheck # not relevant (SQL)
     - execinquery # not relevant (SQL)
-    - cyclop # duplicate of gocyclo
     - lll
     - gas
     - dupl
@@ -48,7 +54,7 @@ linters:
 
 issues:
   exclude-use-default: false
-  max-per-linter: 0
+  max-issues-per-linter: 0
   max-same-issues: 0
   exclude:
     - 'package-comments: should have a package comment'
