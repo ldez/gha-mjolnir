@@ -92,7 +92,7 @@ func parseIssueFixes(text string) []int {
 			for _, issueRaw := range issuesRaw {
 				cleanIssueRaw := cleanNumberRE.ReplaceAllString(issueRaw, "")
 				if len(cleanIssueRaw) != 0 {
-					numb, err := strconv.ParseInt(cleanIssueRaw, 10, 16)
+					numb, err := strconv.ParseInt(cleanIssueRaw, 10, 64)
 					if err != nil {
 						log.Println(err)
 					}

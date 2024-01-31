@@ -61,6 +61,13 @@ func Test_parseIssueFixes(t *testing.T) {
 `,
 			expectedNumbers: []int{13, 14, 15, 16},
 		},
+		{
+			name: "max int 64",
+			text: `
+	Fixes: #9223372036854775807
+`,
+			expectedNumbers: []int{9223372036854775807},
+		},
 	}
 
 	for _, test := range testCases {
