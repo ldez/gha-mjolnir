@@ -69,6 +69,21 @@ func Test_parseIssueFixes(t *testing.T) {
 `,
 			expectedNumbers: []int{math.MaxInt64},
 		},
+		{
+			name: "valid issue numbers ends with a dot",
+			text: `
+	Fixes #13 #14, #15,#16.
+`,
+			expectedNumbers: []int{13, 14, 15, 16},
+		},
+		{
+			name: "multiple lines end with a dot",
+			text: `
+	Fixes: #13,#14.
+	Fixes: #15,#16.
+`,
+			expectedNumbers: []int{13, 14, 15, 16},
+		},
 	}
 
 	for _, test := range testCases {
