@@ -1,6 +1,7 @@
 package main
 
 import (
+	"math"
 	"reflect"
 	"testing"
 )
@@ -66,7 +67,7 @@ func Test_parseIssueFixes(t *testing.T) {
 			text: `
 	Fixes: #9223372036854775807
 `,
-			expectedNumbers: []int{9223372036854775807},
+			expectedNumbers: []int{math.MaxInt64},
 		},
 	}
 

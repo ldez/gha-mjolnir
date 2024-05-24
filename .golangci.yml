@@ -1,9 +1,9 @@
 run:
   timeout: 2m
-  skip-files: []
 linters-settings:
   govet:
-    check-shadowing: true
+    enable:
+      - shadow
   gocyclo:
     min-complexity: 16
   goconst:
@@ -22,22 +22,13 @@ linters-settings:
 linters:
   enable-all: true
   disable:
-    - deadcode # deprecated
-    - exhaustivestruct # deprecated
-    - golint # deprecated
-    - ifshort # deprecated
-    - interfacer # deprecated
-    - maligned # deprecated
-    - nosnakecase # deprecated
-    - scopelint # deprecated
-    - structcheck # deprecated
-    - varcheck # deprecated
+    - execinquery # deprecated
+    - gomnd # deprecated
     - cyclop # duplicate of gocyclo
     - sqlclosecheck # not relevant (SQL)
     - rowserrcheck # not relevant (SQL)
-    - execinquery # not relevant (SQL)
     - lll
-    - gas
+    - gosec
     - dupl
     - prealloc
     - wsl
@@ -48,7 +39,7 @@ linters:
     - wrapcheck
     - exhaustruct
     - forbidigo
-    - gomnd
+    - mnd
     - ifshort
     - varnamelen
 

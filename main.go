@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/google/go-github/v58/github"
+	"github.com/google/go-github/v62/github"
 	"github.com/ldez/ghactions"
 )
 
