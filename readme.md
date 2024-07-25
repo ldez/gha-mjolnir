@@ -12,7 +12,8 @@ Useful:
 
 - to close multiple issues related to a pull request.
 - to close issues related to a pull request not based on the default branch (ex: `master`, `main`).
-For example, when a branch is related to version (e.g. `v1.5`, `v2.0`, ...)
+  For example, when a branch is related to version (e.g. `v1.5`, `v2.0`, ...)
+- To add the same milestone defined on the PR to closed issues.
 
 ## Supported Syntax
 
@@ -49,7 +50,7 @@ jobs:
 
     steps:
       - name: Closes issues related to a merged pull request.
-        uses: ldez/gha-mjolnir@v1.0.3
+        uses: ldez/gha-mjolnir@v1.4.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
