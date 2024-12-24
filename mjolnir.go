@@ -11,15 +11,23 @@ import (
 	"github.com/google/go-github/v62/github"
 )
 
+var issueRegex = `(?:https://github\.com/[\w-]+/[\w-]+/issues/\d+|#\d+)`
+
+func buildGlobalFixesIssueRegex() *regexp.Regexp {
+	actions := strings.Join([]string{"close", "closes", "closed", "fix", "fixes", "fixed", "resolve", "resolves", "resolved"}, "|")
+	endPattern := `(?:[\n\r\s,\.]|$)`
+	regexString := `(?i)(?:` + actions + `)[\s:]+` + issueRegex + `(?:[, ]+` + issueRegex + `)*` + endPattern
+	return regexp.MustCompile(regexString)
+}
+
 var (
-	globalFixesIssueRE = regexp.MustCompile(`(?i)(?:close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)(\s+#\d+(?:[\s,]+#\d+)*\.?(?:[\n\r\s,]|$))`)
-	fixesIssueRE       = regexp.MustCompile(`[\s,]+#`)
-	cleanNumberRE      = regexp.MustCompile(`[.\n\r\s,]`)
+	issueRE            = regexp.MustCompile(issueRegex)
+	globalFixesIssueRE = buildGlobalFixesIssueRegex()
 )
 
 // closeRelatedIssues Closes issues listed in the PR description.
 func closeRelatedIssues(ctx context.Context, client *github.Client, owner string, repositoryName string, pr *github.PullRequest, dryRun bool) error {
-	issueNumbers := parseIssueFixes(pr.GetBody())
+	issueNumbers := parseIssueFixes(pr.GetBody(), owner, repositoryName)
 
 	repo, _, err := client.Repositories.Get(ctx, owner, repositoryName)
 	if err != nil {
@@ -76,31 +84,41 @@ func addComment(ctx context.Context, client *github.Client, owner string, reposi
 	return err
 }
 
-func parseIssueFixes(text string) []int {
+func parseIssueFixes(text string, owner string, repoName string) []int {
 	var issueNumbers []int
 
-	submatch := globalFixesIssueRE.FindAllStringSubmatch(strings.ReplaceAll(text, ":", ""), -1)
+	fixMatches := globalFixesIssueRE.FindAllStringSubmatch(text, -1)
 
-	for _, s := range submatch {
-		fmt.Println(s)
-	}
+	for _, fixMatch := range fixMatches {
+		fmt.Println(fixMatch)
 
-	if len(submatch) != 0 {
-		for _, sub := range submatch {
-			issuesRaw := fixesIssueRE.Split(sub[1], -1)
-
-			for _, issueRaw := range issuesRaw {
-				cleanIssueRaw := cleanNumberRE.ReplaceAllString(issueRaw, "")
-				if len(cleanIssueRaw) != 0 {
-					numb, err := strconv.ParseInt(cleanIssueRaw, 10, 64)
-					if err != nil {
-						log.Println(err)
-					}
+		issueMatches := issueRE.FindAllString(fixMatch[0], -1)
+		for _, issue := range issueMatches {
+			if strings.HasPrefix(issue, "#") {
+				numb, err := strconv.ParseInt(strings.TrimPrefix(issue, "#"), 10, 64)
+				if err != nil {
+					log.Println(err)
+				} else {
 					issueNumbers = append(issueNumbers, int(numb))
+				}
+			} else if strings.HasPrefix(issue, "https://github.com/") {
+				urlParts := strings.Split(issue, "/")
+				if len(urlParts) >= 5 && urlParts[len(urlParts)-2] == "issues" {
+					issueOwner := urlParts[len(urlParts)-4]
+					issueRepo := urlParts[len(urlParts)-3]
+					if issueOwner == owner && issueRepo == repoName {
+						issueNumber, err := strconv.Atoi(urlParts[len(urlParts)-1])
+						if err == nil {
+							issueNumbers = append(issueNumbers, issueNumber)
+						} else {
+							log.Println(err)
+						}
+					} else {
+						log.Println("Skipping issue from different repository:", issue)
+					}
 				}
 			}
 		}
 	}
-
 	return issueNumbers
 }
