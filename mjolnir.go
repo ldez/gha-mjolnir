@@ -19,7 +19,7 @@ var (
 
 // closeRelatedIssues Closes issues listed in the PR description.
 func closeRelatedIssues(ctx context.Context, client *github.Client, owner string, repositoryName string, pr *github.PullRequest, dryRun bool) error {
-	issueNumbers := parseIssueFixes(pr.GetBody())
+	issueNumbers := parseIssueFixes(pr.GetBody(), owner, repositoryName)
 
 	repo, _, err := client.Repositories.Get(ctx, owner, repositoryName)
 	if err != nil {
@@ -76,7 +76,9 @@ func addComment(ctx context.Context, client *github.Client, owner string, reposi
 	return err
 }
 
-func parseIssueFixes(text string) []int {
+func parseIssueFixes(text string, owner string, name string) []int {
+	text = strings.ReplaceAll(text, fmt.Sprintf("https://github.com/%s/%s/issues/", owner, name), "#")
+
 	var issueNumbers []int
 
 	submatch := globalFixesIssueRE.FindAllStringSubmatch(strings.ReplaceAll(text, ":", ""), -1)
