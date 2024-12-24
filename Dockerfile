@@ -1,4 +1,4 @@
-FROM golang:alpine3.20 as builder
+FROM golang:alpine3.20 AS builder
 
 RUN apk --no-cache --no-progress add make git gcc musl-dev ca-certificates
 
