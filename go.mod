@@ -1,6 +1,6 @@
 module github.com/ldez/gha-mjolnir
 
-go 1.22.0
+go 1.24.0
 
 require (
 	github.com/google/go-github/v68 v68.0.0
@@ -9,5 +9,5 @@ require (
 
 require (
 	github.com/google/go-querystring v1.1.0 // indirect
-	golang.org/x/oauth2 v0.24.0 // indirect
+	golang.org/x/oauth2 v0.29.0 // indirect
 )
