@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GO_VERSION: stable
-      GOLANGCI_LINT_VERSION: v1.62.2
+      GOLANGCI_LINT_VERSION: v2.0.2
       CGO_ENABLED: 0
 
     steps:
@@ -32,7 +32,7 @@ jobs:
 
       # https://golangci-lint.run/usage/install#other-ci
       - name: Install golangci-lint ${{ env.GOLANGCI_LINT_VERSION }}
-        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin ${GOLANGCI_LINT_VERSION}
+        run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/HEAD/install.sh | sh -s -- -b $(go env GOPATH)/bin ${GOLANGCI_LINT_VERSION}
 
       - name: Make
         run: make

@@ -1,56 +1,62 @@
-run:
-  timeout: 2m
-linters-settings:
-  govet:
-    enable:
-      - shadow
-  gocyclo:
-    min-complexity: 16
-  goconst:
-    min-len: 3
-    min-occurrences: 3
-  misspell:
-    locale: US
-  depguard:
-    rules:
-      main:
-        deny:
-          - pkg: "github.com/instana/testify"
-            desc: not allowed
-          - pkg: "github.com/pkg/errors"
-            desc: Should be replaced by standard lib errors package
+version: "2"
+
+formatters:
+  enable:
+    - gci
+    - gofumpt
+
 linters:
-  enable-all: true
+  default: all
   disable:
-    - exportloopref # deprecated
     - cyclop # duplicate of gocyclo
-    - sqlclosecheck # not relevant (SQL)
-    - rowserrcheck # not relevant (SQL)
-    - lll
-    - gosec
     - dupl
-    - prealloc
-    - wsl
-    - nlreturn
-    - testpackage
-    - paralleltest
-    - tparallel
-    - wrapcheck
     - exhaustruct
     - forbidigo
+    - gosec
+    - lll
     - mnd
+    - nlreturn
+    - paralleltest
+    - prealloc
+    - rowserrcheck # not relevant (SQL)
+    - sqlclosecheck # not relevant (SQL)
+    - testpackage
+    - tparallel
     - varnamelen
+    - wrapcheck
+    - wsl
+
+  settings:
+    depguard:
+      rules:
+        main:
+          deny:
+            - pkg: github.com/instana/testify
+              desc: not allowed
+            - pkg: github.com/pkg/errors
+              desc: Should be replaced by standard lib errors package
+    goconst:
+      min-len: 3
+      min-occurrences: 3
+    gocyclo:
+      min-complexity: 16
+    govet:
+      enable:
+        - shadow
+    misspell:
+      locale: US
+
+  exclusions:
+    presets:
+      - comments
+    rules:
+      - path: version.go
+        text: (version|date|commit) is a global variable
+      - path: mjolnir.go
+        text: (.+)RE is a global variable
+      - path: mjolnir_test.go
+        text: Function 'Test_parseIssueFixes' is too long
 
 issues:
-  exclude-use-default: false
   max-issues-per-linter: 0
   max-same-issues: 0
-  exclude:
-    - 'package-comments: should have a package comment'
-  exclude-rules:
-    - path: version.go
-      text: (version|date|commit) is a global variable
-    - path: mjolnir.go
-      text: (.+)RE is a global variable
-    - path: mjolnir_test.go
-      text: Function 'Test_parseIssueFixes' is too long
