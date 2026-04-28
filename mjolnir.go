@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/google/go-github/v71/github"
+	"github.com/google/go-github/v85/github"
 )
 
 var (
@@ -28,6 +28,7 @@ func closeRelatedIssues(ctx context.Context, client *github.Client, owner string
 
 	for _, issueNumber := range issueNumbers {
 		log.Printf("PR #%d: closes issue #%d, add milestones %s", pr.GetNumber(), issueNumber, pr.Milestone.GetTitle())
+
 		if !dryRun {
 			err := closeIssue(ctx, client, owner, repositoryName, pr, issueNumber)
 			if err != nil {
@@ -65,6 +66,7 @@ func closeIssue(ctx context.Context, client *github.Client, owner string, reposi
 	}
 
 	_, _, err := client.Issues.Edit(ctx, owner, repositoryName, issueNumber, issueRequest)
+
 	return err
 }
 
@@ -73,6 +75,7 @@ func addComment(ctx context.Context, client *github.Client, owner string, reposi
 		Body: github.Ptr(message),
 	}
 	_, _, err := client.Issues.CreateComment(ctx, owner, repositoryName, issueNumber, issueComment)
+
 	return err
 }
 
@@ -98,6 +101,7 @@ func parseIssueFixes(text string, owner string, name string) []int {
 					if err != nil {
 						log.Println(err)
 					}
+
 					issueNumbers = append(issueNumbers, int(numb))
 				}
 			}
