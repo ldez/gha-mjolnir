@@ -20,6 +20,14 @@ func Test_parseIssueFixes(t *testing.T) {
 			expectedNumbers: []int{},
 		},
 		{
+			name: "prefixes",
+			text: `
+	prefix #13
+	suffix #14
+`,
+			expectedNumbers: []int{},
+		},
+		{
 			name: "valid issue numbers coma",
 			text: `
 	Fixes #13 #14, #15,#16,
