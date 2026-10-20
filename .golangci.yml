@@ -11,6 +11,7 @@ linters:
     - cyclop # duplicate of gocyclo
     - dupl
     - exhaustruct
+    - exhaustruct_v5
     - forbidigo
     - gosec
     - lll
@@ -24,7 +25,8 @@ linters:
     - tparallel
     - varnamelen
     - wrapcheck
-    - wsl
+    - wsl # deprecated
+    - gomodguard # deprecated
 
   settings:
     depguard:

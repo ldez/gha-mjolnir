@@ -8,7 +8,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/google/go-github/v85/github"
+	"github.com/google/go-github/v93/github"
 )
 
 var (
@@ -60,19 +60,19 @@ func closeIssue(ctx context.Context, client *github.Client, owner string, reposi
 		milestone = pr.Milestone.Number
 	}
 
-	issueRequest := &github.IssueRequest{
+	issueRequest := github.UpdateIssueRequest{
 		Milestone: milestone,
-		State:     github.Ptr("closed"),
+		State:     new("closed"),
 	}
 
-	_, _, err := client.Issues.Edit(ctx, owner, repositoryName, issueNumber, issueRequest)
+	_, _, err := client.Issues.Update(ctx, owner, repositoryName, issueNumber, issueRequest)
 
 	return err
 }
 
 func addComment(ctx context.Context, client *github.Client, owner string, repositoryName string, issueNumber int, message string) error {
-	issueComment := &github.IssueComment{
-		Body: github.Ptr(message),
+	issueComment := github.IssueCommentRequest{
+		Body: message,
 	}
 	_, _, err := client.Issues.CreateComment(ctx, owner, repositoryName, issueNumber, issueComment)
 
